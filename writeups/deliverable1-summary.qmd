@@ -1,26 +1,26 @@
 ---
 title: "Summary of Findings: Preliminary Tasks 1–3"
-author: 'Ruixi Zhang'
+author: 'Ruixi Zhang, Isaac Luna, Ryan Au, Hannah Nguyen'
 date: today
 ---
 
-### HTML scraping
+### Task 1: Effect of Header Information on Binary Class Predictions
 
-Yes. We examined whether including webpage header content could improve the prediction of claims status. We modified the text extraction process to include HTML heading elements (h1–h6) in addition to paragraph text. The results showed that including header information improved the ROC AUC from 0.841 to 0.873. This improvement suggests that webpage headings contain useful information for identifying claims-related content and can enhance predictive performance.
+We examined whether including webpage header content could improve the binary class predictions of claims status. We modified the text extraction process to include HTML heading elements (h1–h6) in addition to paragraph text. The results showed that including header information improved the ROC AUC from 0.841 to 0.873. This improvement suggests that webpage headings contain useful information for identifying claims-related content and can enhance predictive performance.
 
-### Bigrams
+### Task 2: Effect of Bigrams on Predictive Accuracy
 
 We investigated whether bigrams capture additional information relevant to claims classification beyond individual words. We first created bigram features from the webpage text, applied stopword removal and lemmatization, and selected the 2,000 most frequent bigrams. We then used principal component analysis to reduce the dimensionality of the bigram features. A ridge-regularized logistic PCR model was fitted to the word-tokenized data to obtain predicted log-odds, which were combined with the bigram principal components in a second logistic regression model.
 
 The Word-only model achieved a test ROC AUC of 0.857, while the combined Word + Bigram model achieved 0.850. The decrease of approximately 0.007 indicates that adding bigram features did not improve predictive performance. Therefore, our results provide no clear evidence that bigrams capture additional useful predictive information beyond individual words.
 
 
-### Neural net
+### Task 3: Neural Network Model
 
-Architecture: We developed a neural network with a text vectorization layer that converted webpage text into TF-IDF features, followed by a dropout layer, one hidden dense layer with 64 units and ReLU activation, another dropout layer, and a sigmoid output layer. The vocabulary was limited to 6,000 tokens.
+We developed a neural network with a text vectorization layer that converted webpage text into TF-IDF features. We experimented with different architectures and features, then reached a final model consisting of a preprocessed layer, followed by a dropout layer, one hidden dense layer with 64 units, ReLU activation, and L2 regularization, another dropout layer, and a sigmoid output layer. The vocabulary was limited to using the 6,000 most frequent words (or two-word phrases for bigrams).
 
-Optimization and loss: The model was optimized using the Adam optimizer with a learning rate of 0.001 and binary cross-entropy as the loss function. We also applied a dropout rate of 0.6 and L2 regularization of 0.001 to help reduce overfitting.
+Optimization and loss: The model was optimized using the Adam optimizer with a learning rate of 0.001 and binary cross-entropy as the loss function. We also applied a dropout rate of 0.6 and L2 regularization with penalty 0.001 to help reduce overfitting.
 
-Training epochs: The final model was trained for 30 epochs with a batch size of 32.
+Training and Evaluation: The final model was trained for 30 epochs with a batch size of 32. The model varied one parameter at a time, while fixing the others, in the order max_tokens, dropout, hidden layer size (units), L2 penalty, the effect of bigrams, and learning rate. Each parameter improved the ROC AUC slightly, but we found that including bigrams or varying learning rate didn't significantly improve the prediction accuracy.
 
-Predictive accuracy: On the test data, the final neural network achieved a ROC AUC of approximately 0.836, with a 95% confidence interval of 0.797–0.875. Its classification accuracy was 78.5%.
+Predictive accuracy: On the test data, the final neural network achieved a ROC AUC of approximately 0.836, with a 95% confidence interval of [0.797, 0.875]. Its classification accuracy was 78.5%. Based on the confidence interval, the accuracy is not statistically different than the principal component logistic regression model from Task 1.

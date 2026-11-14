@@ -1,17 +1,19 @@
 ---
-title: "Deliverable2"
+title: "Methods and Findings for the Primary Task"
+author: 'Ruixi Zhang, Isaac Luna, Ryan Au, Hannah Nguyen'
+date: today
 format: html
 ---
 
 
-### Text preprocessing
-We extracted webpage's title, headings, and text. We removed urls, emails, digits, punctuation, symbols and converted all the text to lowercase. The text was split into individual words with stop words removed, the words were then lemmatized and words smaller than 3 characters were removed. We used a vector of TF IDF weights to represent each page and also kept words that appeared in more than 2 pages.
+### Text Preprocessing
+We extracted webpage's title, headings, and text. We removed urls, emails, digits, punctuation, symbols and converted all the text to lowercase. The text was split into individual words with stop words removed, the words were then lemmatized and words smaller than 3 characters were removed. We used a vector of TF-IDF weights to represent each page and also kept words that appeared in more than 2 pages.
  
-### Predictive models
-We used L2 regularized linear support vector machines that were fitted with LiblineaR for the binary and multiclass settings. The data was split with 80% going to training and 20% for testing stratified by m-class label. We then used 5 fold cross validation on the training set to find the optimal regularization cost. We choose the highest average accuracy from these values 0.1, 0.3, 1, 3, 10. 1 was best for the binary model and 3 was the best for the multiclass model. The final models were refit with these costs and all the labeled data.
+### Predictive Models
+We used L2 regularized linear support vector machines that were fitted with LiblineaR for the binary and multiclass settings. The data was split with 80% going to training and 20% for testing stratified by m-class label. Then, we used 5 fold cross validation on the training set to find the optimal regularization cost. We chose the highest average accuracy from these values 0.1, 0.3, 1, 3, 10. 1 was best for the binary model and 3 was best for the multiclass model. The final models were refit with these costs and all the labeled data.
 
 
-### Estimated prediction accuracy
-On the test set the binary model got an accuracy of 83.6%, sensitivity of 0.832, and specificity of 0.842. With about equal specificity and sensitivity that means the model was about as good on both classes. This accuracy is higher than the neural net(78.5) we fitted. While the multiclass model got an accuracy of 84.1%, macro averaged sensitivity of 0.780, and macro averaged specificity of 0.948. The accuracy overall is comparable to the binary model even with the higher number of categories. However the lower macro averaged sensitivity indicates the model is less reliable with smaller classes.
+### Estimated Prediction Accuracy
+On the test set, the binary model achieved an accuracy of 83.6%, sensitivity of 0.832, and specificity of 0.842. With about equal specificity and sensitivity, this implies the model was about as good on both classes. This accuracy is higher than the neural network model we fitted, which achieved an accuracy of 78.5%. The multiclass model achieved an accuracy of 84.1%, macro averaged sensitivity of 0.780, and macro averaged specificity of 0.948. The accuracy overall is comparable to the binary model even with a higher number of categories. However, the lower macro averaged sensitivity value indicates that the model is less reliable with smaller classes.
 
 
